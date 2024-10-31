@@ -50,22 +50,28 @@ INSERT INTO demiurgo_provider_service VALUES (5, 5);
 CREATE TABLE demiurgo_user(
 	user_id BIGINT AUTO_INCREMENT,
 	user_name VARCHAR(50) NOT NULL,
+    user_birthdate DATE NOT NULL,
+    user_address VARCHAR(90) NOT NULL,
 	user_cpf VARCHAR(11) UNIQUE NOT NULL,
+    user_password VARCHAR(30) NOT NULL,
     
 	CONSTRAINT pk_demiurgo_user PRIMARY KEY (user_id)
 
 );
-INSERT INTO demiurgo_user VALUES (null, "Jean", "30816605050");
-INSERT INTO demiurgo_user VALUES (null, "Zhongli", "86259252005");
-INSERT INTO demiurgo_user VALUES (null, "Robin", "25303310060");
+INSERT INTO demiurgo_user VALUES (null, "Jean", "2000-09-14", "Mondstadt","30816605050", "Barbara");
+INSERT INTO demiurgo_user VALUES (null, "Zhongli", "0001-04-04", "Liyue" ,"86259252005", "FaltaMoney");
+INSERT INTO demiurgo_user VALUES (null, "Robin", "2015-09-13", "Estação Espacial" ,"25303310060", "NowImDJ");
 
 CREATE TABLE demiurgo_order(
 	order_id BIGINT AUTO_INCREMENT,
 	order_value DECIMAL(10,2),
+    order_date DATE NOT NULL,
+    order_conclusion_forecast DATE NOT NULL,
+    order_conclusion DATE,
 	user_id BIGINT,
 	provider_id BIGINT,
 	service_id BIGINT,
-	service_description LONGTEXT,
+	order_description LONGTEXT,
     
 	CONSTRAINT pk_demiurgo_order PRIMARY KEY (order_id),
 	CONSTRAINT fk_demiurgo_order_service FOREIGN KEY (service_id) REFERENCES demiurgo_service (service_id),
@@ -73,7 +79,7 @@ CREATE TABLE demiurgo_order(
 	CONSTRAINT fk_demiurgo_order_user FOREIGN KEY (user_id) REFERENCES demiurgo_user (user_id)
     
 );
-INSERT INTO demiurgo_order VALUES (null, 200.00, 1, 1, 1, "Necessita-se de várias espadas novas para os Cavaleiros de Favonius.");
-INSERT INTO demiurgo_order VALUES (null, 1000.00, 1, 4, 4, "Necessitamos de poções de cura para as lutas eminentes contra o abismo.");
-INSERT INTO demiurgo_order VALUES (null, 5000.00, 2, 3, 3, "Queremos explodir uma montanha.");
-INSERT INTO demiurgo_order VALUES (null, 2000.00, 2, 3, 2, "Queremos fogos de artifício para o próximo festival de Liyue.");
+INSERT INTO demiurgo_order VALUES (null, 200.00, CURRENT_DATE(), "2024-11-27", NULL, 1, 1, 1, "Necessita-se de várias espadas novas para os Cavaleiros de Favonius.");
+INSERT INTO demiurgo_order VALUES (null, 1000.00, CURRENT_DATE(), "2025-01-01", NULL, 1, 4, 4, "Necessitamos de poções de cura para as lutas eminentes contra o abismo.");
+INSERT INTO demiurgo_order VALUES (null, 5000.00, CURRENT_DATE(), "2024-11-11", NULL, 2, 3, 3, "Queremos explodir uma montanha.");
+INSERT INTO demiurgo_order VALUES (null, 2000.00, CURRENT_DATE(), "2024-12-29", NULL, 2, 3, 2, "Queremos fogos de artifício para o próximo festival de Liyue.");
